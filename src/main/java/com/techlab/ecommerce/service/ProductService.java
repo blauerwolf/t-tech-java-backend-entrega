@@ -26,7 +26,7 @@ public class ProductService {
 
     public List<Producto> listarProductos(String nombre, Double precio) {
         if (!nombre.isEmpty() && precio > 0) {
-            return this.productoRepository.findByNombreContainingAndPrecioLessThanEqual(nombre, precio);
+            //return this.productoRepository.findByNombreContainingAndPrecioLessThanEqual(nombre, precio);
         }
 
         if (!nombre.isEmpty()) {
