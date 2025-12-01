@@ -3,74 +3,88 @@ package com.techlab.ecommerce.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.techlab.ecommerce.model.Producto;
-import com.techlab.ecommerce.repository.ProductoRepository;
+import com.techlab.ecommerce.dto.request.ProductRequestDTO;
+import com.techlab.ecommerce.dto.response.ProductResponseDTO;
+import com.techlab.ecommerce.entity.Product;
+import com.techlab.ecommerce.exception.ProductNotFoundException;
+import com.techlab.ecommerce.repository.ProductRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-// beans
 @Service
 public class ProductService {
 
-    //private ProductoMemRepository repository;
-    private ProductoRepository productoRepository;
+    private ProductRepository repository;
 
-    public ProductService(ProductoRepository repository) {
-        this.productoRepository = repository;
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
     }
 
-    public Producto crearProducto(Producto producto) {
-        System.out.println("Creando Nuevo Producto");
+    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
+        Product product = new Product();
+        BeanUtils.copyProperties(productRequestDTO, product);
 
-        return this.productoRepository.save(producto);
+        this.repository.save(product);
+
+        ProductResponseDTO productResponseDTO = new ProductResponseDTO();
+        BeanUtils.copyProperties(product, productResponseDTO);
+        return productResponseDTO;
     }
 
-    public List<Producto> listarProductos(String nombre, Double precio) {
-        if (!nombre.isEmpty() && precio > 0) {
-            //return this.productoRepository.findByNombreContainingAndPrecioLessThanEqual(nombre, precio);
-        }
-
-        if (!nombre.isEmpty()) {
-            return this.productoRepository.findByNombreContaining(nombre);
-        }
-
-        if (precio > 0) {
-            return this.productoRepository.findByPrecioLessThanEqual(precio);
-        }
-
-        return this.productoRepository.findAll();
+    public List<ProductResponseDTO> getProducts() {
+        return this.repository.findAll()
+                .stream()
+                .map(this::mapperToDTO)
+                .toList();
     }
 
-    public Producto editarNombreProducto(Long id, Producto dataProducto) {
-        // TODO: https://www.baeldung.com/java-optional-return
-        Producto producto = this.productoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("no encontramos el producto"));
+    public List<ProductResponseDTO> searchProductByName(String queryName) {
+        List<Product> foundProducts = this.repository.findByNameContainingIgnoreCase(queryName);
 
-        // VALIDACIONES
-        if (dataProducto.getNombre() == null || dataProducto.getNombre().isBlank()) {
-            System.out.println("No se puede editar el producto. porque el nombre no es valido");
-            return null;
+        if (foundProducts.isEmpty()) {
+            throw new ProductNotFoundException(queryName);
         }
 
-        producto.setNombre(dataProducto.getNombre());
-        this.productoRepository.save(producto);
-
-        return producto;
+        return foundProducts
+                .stream()
+                .map(this::mapperToDTO)
+                .toList();
     }
 
-    public Producto borrarProducto(Long id) {
-        Optional<Producto> productOptional = this.productoRepository.findById(id);
-        if (productOptional.isEmpty()) {
-            System.out.println("No se puede borrar el producto. porque no se encontro");
-            return null;
-        }
+    public ProductResponseDTO searchProductById(Long id) {
+        Product product = this.repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
 
-        Producto producto = productOptional.get();
+        return this.mapperToDTO(product);
+    }
 
-        this.productoRepository.delete(producto);
-        // se puede usar el siguiente codigo, pero hay que manejar una excepcion(OptimisticLockingFailureException)
-        //this.repository.deleteById(producto);
+    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO productRequestDTO) {
+        Product product = this.repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+        BeanUtils.copyProperties(productRequestDTO, product);
 
-        System.out.println("Se borro correctamente el producto con id: " + producto.getId());
-        return producto;
+        this.repository.save(product);
+
+        return this.mapperToDTO(product);
+    }
+
+    public ProductResponseDTO deleteProduct(Long id) {
+        Product product = this.repository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+        this.repository.delete(product);
+
+        return this.mapperToDTO(product);
+    }
+
+    /**
+     * Convertir la entidad de *Product* en un *ProductResponseDTO* para la respuesta
+     *
+     * @param p - producto a convertir
+     * @return ProductResponseDTO
+     */
+    private ProductResponseDTO mapperToDTO(Product p) {
+        ProductResponseDTO dto = new ProductResponseDTO();
+        BeanUtils.copyProperties(p, dto);
+        return dto;
     }
 }

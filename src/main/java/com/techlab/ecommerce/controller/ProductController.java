@@ -1,7 +1,7 @@
 package com.techlab.ecommerce.controller;
 
 import java.util.List;
-import com.techlab.ecommerce.model.Producto;
+import com.techlab.ecommerce.entity.Product;
 import com.techlab.ecommerce.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,18 +11,20 @@ public class ProductController {
 
     private ProductService service;
 
+    // Inyección de dependencia
     public ProductController(ProductService service) {
+
         this.service = service;
     }
 
     @PostMapping("/products")
-    public Producto crearProducto(@RequestBody Producto producto) {
+    public Product crearProducto(@RequestBody Product producto) {
         return this.service.crearProducto(producto);
     }
 
     // GET /products?nombre="product"&precio=123
     @GetMapping("/products")
-    public List<Producto> listarProductos(
+    public List<Product> listarProductos(
             @RequestParam(required = false, defaultValue = "") String nombre,
             @RequestParam(required = false, defaultValue = "0") Double precio) {
         return this.service.listarProductos(nombre, precio);
@@ -30,13 +32,12 @@ public class ProductController {
 
     //@PatchMapping
     @PutMapping("/products/{id}")
-    public Producto editarProducto(@PathVariable Long id, @RequestBody Producto producto) {
+    public Product editarProducto(@PathVariable Long id, @RequestBody Product producto) {
         return this.service.editarNombreProducto(id, producto);
     }
 
     @DeleteMapping("/products/{id}")
-    public Producto borrarProducto(@PathVariable(name = "id") Long productId) {
+    public Product borrarProducto(@PathVariable(name = "id") Long productId) {
         return this.service.borrarProducto(productId);
     }
-
 }
