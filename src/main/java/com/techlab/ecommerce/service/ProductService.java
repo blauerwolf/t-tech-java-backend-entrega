@@ -1,8 +1,6 @@
 package com.techlab.ecommerce.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import com.techlab.ecommerce.dto.request.ProductRequestDTO;
 import com.techlab.ecommerce.dto.response.ProductResponseDTO;
 import com.techlab.ecommerce.entity.Product;
@@ -14,8 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
 
-    private ProductRepository repository;
+    private final ProductRepository repository;
 
+    // DI
     public ProductService(ProductRepository repository) {
         this.repository = repository;
     }
@@ -42,7 +41,7 @@ public class ProductService {
         List<Product> foundProducts = this.repository.findByNameContainingIgnoreCase(queryName);
 
         if (foundProducts.isEmpty()) {
-            throw new ProductNotFoundException(queryName);
+            throw new ProductNotFoundException(queryName, 4);
         }
 
         return foundProducts
@@ -53,14 +52,14 @@ public class ProductService {
 
     public ProductResponseDTO searchProductById(Long id) {
         Product product = this.repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+                .orElseThrow(() -> new ProductNotFoundException(id.toString(), 5));
 
         return this.mapperToDTO(product);
     }
 
-    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO productRequestDTO) {
+    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO productRequestDTO) throws Throwable {
         Product product = this.repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+                .orElseThrow(() -> new ProductNotFoundException(id.toString(), 1001));
         BeanUtils.copyProperties(productRequestDTO, product);
 
         this.repository.save(product);
@@ -70,7 +69,7 @@ public class ProductService {
 
     public ProductResponseDTO deleteProduct(Long id) {
         Product product = this.repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+                .orElseThrow(() -> new ProductNotFoundException(id.toString(), 5));
         this.repository.delete(product);
 
         return this.mapperToDTO(product);

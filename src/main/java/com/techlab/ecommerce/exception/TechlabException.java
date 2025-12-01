@@ -15,6 +15,4 @@ public class TechlabException extends RuntimeException {
         this.errorCode = errorCode;
         this.status = status;
     }
-
-
 }

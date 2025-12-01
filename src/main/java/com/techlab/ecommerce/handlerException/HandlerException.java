@@ -18,11 +18,11 @@ public class HandlerException {
         responseDTO.setMessage(e.getMessage());
         responseDTO.setErrorCode(e.getErrorCode());
 
-        return ResponseEntity.status(e.getStatus()).body(resonseDTO);
+        return ResponseEntity.status(e.getStatus()).body(responseDTO);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponseDTO> defaultHandler(Exception e) {
+    public ResponseEntity<ExceptionResponseDTO> defaultHandler(TechlabException e) {
         ExceptionResponseDTO responseDTO = new ExceptionResponseDTO();
         responseDTO.setTitle("There was a problem with the server");
         responseDTO.setMessage(e.getMessage());
