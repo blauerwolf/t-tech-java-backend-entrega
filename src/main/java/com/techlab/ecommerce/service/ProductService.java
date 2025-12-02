@@ -16,6 +16,7 @@ public class ProductService {
 
     // DI
     public ProductService(ProductRepository repository) {
+
         this.repository = repository;
     }
 
@@ -57,7 +58,7 @@ public class ProductService {
         return this.mapperToDTO(product);
     }
 
-    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO productRequestDTO) throws Throwable {
+    public ProductResponseDTO updateProduct(Long id, ProductRequestDTO productRequestDTO)  {
         Product product = this.repository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id.toString(), 1001));
         BeanUtils.copyProperties(productRequestDTO, product);

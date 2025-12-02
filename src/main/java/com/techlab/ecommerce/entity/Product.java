@@ -16,24 +16,19 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private double precio;
-    private String descripcion;
-    private String categoria;
+    private String name;
+    private String image;
+    private Double price;
+    private Integer stock;
+    private String category;
+    private String description;
 
-    public Product(String nuevoNombre, double nuevoPrecio, String nuevaDescripcion, String nuevaCategoria) {
-        nombre = nuevoNombre;
-        precio = nuevoPrecio;
-        descripcion = nuevaDescripcion;
-        categoria = nuevaCategoria;
-    }
-
-    public Product() { }
 
     public String toString() {
-        return "Nombre: " + getNombre() +
-                " Precio: " + getPrecio() +
-                " Descripción: " + getDescripcion() +
-                " Categoría: " + getCategoria();
+        return "Nombre: " + getName() +
+                " Precio: " + getPrice() +
+                " Descripción: " + getDescription() +
+                " Categoría: " + getCategory() +
+                " Imagen: " + getImage();
     }
 }

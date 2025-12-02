@@ -1,3 +1,32 @@
 spring:
   application:
     name: ecommerce
+
+  http:
+    encoding:
+      force: true
+      enable: true
+      charset: UTF-8
+
+  profiles:
+    active: ${PROFILE:dev}
+
+  sql:
+    init:
+      data-locations: classpath:/datos.sql
+      mode: always
+
+  jpa:
+    defer-datasource-initialization: true
+
+server:
+  port: ${PORT:8888}
+frontend:
+  url: ${FRONT_END_URL:http://localhost:5173}
+
+springdoc:
+  api-docs:
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+  swagger-ui:
+    path: /docs

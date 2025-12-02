@@ -6,13 +6,15 @@ import com.techlab.ecommerce.dto.request.ProductRequestDTO;
 import com.techlab.ecommerce.dto.response.ProductResponseDTO;
 import com.techlab.ecommerce.entity.Product;
 import com.techlab.ecommerce.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/products")
 @CrossOrigin(origins = "${frontend.url}")
 public class ProductController {
 
