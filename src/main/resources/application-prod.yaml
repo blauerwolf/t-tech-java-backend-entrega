@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: ${DDL_MODE}
+      ddl-auto: ${DDL_MODE:update}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect

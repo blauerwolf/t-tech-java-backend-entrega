@@ -1,9 +1,9 @@
 spring:
-  application:
-    name: ecommerce
-
   config:
-    import: optional:file:.env
+    import: optional:file:.env[.properties]
+
+  application:
+    name: ${APPLICATION_NAME:ecommerce}
 
   http:
     encoding:

@@ -47,7 +47,7 @@ public class ProductController {
         return this.service.searchProductById(id);
     }
 
-    @Operation(summary = "Actalizar producto", description = "Actualiza un producto usando las propiedades de la requesto, esto pasa si el ID es válido.")
+    @Operation(summary = "Actualizar producto", description = "Actualiza un producto usando las propiedades de la requesto, esto pasa si el ID es válido.")
     @PutMapping("/{id}")
     public ProductResponseDTO updateProduct(@PathVariable Long id,
         @RequestBody ProductRequestDTO requestDTO) {
