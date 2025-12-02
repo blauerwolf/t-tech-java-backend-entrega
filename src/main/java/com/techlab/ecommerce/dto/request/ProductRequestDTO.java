@@ -1,5 +1,6 @@
 package com.techlab.ecommerce.dto.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
@@ -12,7 +13,8 @@ public class ProductRequestDTO {
     private String image;
     private Double price;
     private Integer stock;
-    //private String category;
+
+    @NotNull(message = "Debe indicar una categoría.")
     Long categoryId;
     private String description;
 }

@@ -2,6 +2,7 @@ package com.techlab.ecommerce.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
@@ -36,8 +37,9 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
+    @NotNull(message = "La categoría no puede ser nula.")
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     private String description;
