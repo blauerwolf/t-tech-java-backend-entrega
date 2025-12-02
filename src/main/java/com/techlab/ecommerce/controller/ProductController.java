@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.techlab.ecommerce.dto.request.ProductRequestDTO;
 import com.techlab.ecommerce.dto.response.ProductResponseDTO;
-import com.techlab.ecommerce.entity.Product;
 import com.techlab.ecommerce.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

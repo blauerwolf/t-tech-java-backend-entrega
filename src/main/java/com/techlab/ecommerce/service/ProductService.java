@@ -42,7 +42,7 @@ public class ProductService {
         List<Product> foundProducts = this.repository.findByNameContainingIgnoreCase(queryName);
 
         if (foundProducts.isEmpty()) {
-            throw new ProductNotFoundException(queryName, 4);
+            throw new ProductNotFoundException(queryName);
         }
 
         return foundProducts
@@ -53,14 +53,14 @@ public class ProductService {
 
     public ProductResponseDTO searchProductById(Long id) {
         Product product = this.repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString(), 5));
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
 
         return this.mapperToDTO(product);
     }
 
     public ProductResponseDTO updateProduct(Long id, ProductRequestDTO productRequestDTO)  {
         Product product = this.repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString(), 1001));
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
         BeanUtils.copyProperties(productRequestDTO, product);
 
         this.repository.save(product);
@@ -70,7 +70,7 @@ public class ProductService {
 
     public ProductResponseDTO deleteProduct(Long id) {
         Product product = this.repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id.toString(), 5));
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
         this.repository.delete(product);
 
         return this.mapperToDTO(product);
