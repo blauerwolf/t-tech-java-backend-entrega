@@ -34,3 +34,8 @@ springdoc:
     default-consumes-media-type: application/json
   swagger-ui:
     path: /docs
+
+logging:
+  level:
+    org.springdoc: DEBUG
+    org.spingframework.web: DEBUG

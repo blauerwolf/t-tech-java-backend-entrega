@@ -2,30 +2,35 @@ package com.techlab.ecommerce.handlerException;
 
 import com.techlab.ecommerce.dto.response.ExceptionResponseDTO;
 import com.techlab.ecommerce.exception.TechlabException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-//@Hidden
+@Slf4j
 @RestControllerAdvice
 public class HandlerException {
 
     @ExceptionHandler(TechlabException.class)
     public ResponseEntity<ExceptionResponseDTO> techlabException(TechlabException e) {
-        ExceptionResponseDTO responseDTO = new ExceptionResponseDTO();
-        responseDTO.setTitle(e.getTitle());
-        responseDTO.setMessage(e.getMessage());
+        log.error("Techlab exception: {}", e.getMessage(), e);
 
-        return ResponseEntity.status(e.getStatus()).body(responseDTO);
+        ExceptionResponseDTO dto = new ExceptionResponseDTO();
+        dto.setTitle(e.getTitle());
+        dto.setMessage(e.getMessage());
+
+        return ResponseEntity.status(e.getStatus()).body(dto);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponseDTO> defaultHandler(TechlabException e) {
-        ExceptionResponseDTO responseDTO = new ExceptionResponseDTO();
-        responseDTO.setTitle("There was a problem with the server");
-        responseDTO.setMessage(e.getMessage());
+    public ResponseEntity<ExceptionResponseDTO> defaultHandler(Exception e) {
+        log.error("Internal server error: {}", e.getMessage(), e);
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDTO);
+        ExceptionResponseDTO dto = new ExceptionResponseDTO();
+        dto.setTitle("There was a problem with the server");
+        dto.setMessage(e.getMessage());
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(dto);
     }
 }
