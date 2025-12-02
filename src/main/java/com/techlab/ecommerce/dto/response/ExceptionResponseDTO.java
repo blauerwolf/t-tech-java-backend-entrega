@@ -8,6 +8,5 @@ import lombok.Setter;
 public class ExceptionResponseDTO {
     private String title;
     private String message;
-    private Integer errorCode;
 }
 
