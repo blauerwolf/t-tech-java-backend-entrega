@@ -1,6 +1,7 @@
 package com.techlab.ecommerce.service;
 
 import java.util.List;
+
 import com.techlab.ecommerce.dto.request.ProductRequestDTO;
 import com.techlab.ecommerce.dto.response.ProductResponseDTO;
 import com.techlab.ecommerce.entity.Category;
@@ -9,7 +10,15 @@ import com.techlab.ecommerce.exception.ProductNotFoundException;
 import com.techlab.ecommerce.exception.TechlabException;
 import com.techlab.ecommerce.repository.CategoryRepository;
 import com.techlab.ecommerce.repository.ProductRepository;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +78,50 @@ public class ProductService {
                 .stream()
                 .map(this::mapperToDTO)
                 .toList();
+    }
+
+    public Page<ProductResponseDTO> listProducts(
+            int page,
+            int size,
+            String sortBy,
+            String direction,
+            Long categoryId,
+            String name,
+            Double minPrice,
+            Double maxPrice
+    ) {
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Product> products = productRepository.findAll((root, query, cb) -> {
+            Predicate p = cb.conjunction();
+
+            if (categoryId != null) {
+                p = cb.and(p, cb.equal(root.get("category").get("id"), categoryId));
+            }
+
+            if (name != null && !name.isBlank()) {
+                p = cb.and(p, cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+            }
+
+            if (minPrice != null) {
+                p = cb.and(p, cb.greaterThanOrEqualTo(root.get("price"), minPrice));
+            }
+
+            if (maxPrice != null) {
+                p = cb.and(p, cb.lessThanOrEqualTo(root.get("price"), maxPrice));
+            }
+
+            return p;
+
+
+        }, pageable);
+
+        // Convierto Page<Product> -> Page<ProductResponseDTO>
+        return products.map(this::mapperToDTO);
     }
 
     public List<ProductResponseDTO> searchProductByName(String queryName) {

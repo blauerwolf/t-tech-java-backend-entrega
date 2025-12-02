@@ -7,6 +7,7 @@ import com.techlab.ecommerce.dto.response.ProductResponseDTO;
 import com.techlab.ecommerce.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,29 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.service.createProduct(requestDTO));
     }
 
-    @Operation(summary = "Listar productos", description = "Obtiene un listado de todos los productos del sistema")
+    @Operation(summary = "Listar productos", description = "Lista todos los productos con filtros opcionales, paginación y ordenamiento")
+    @GetMapping("")
+    public ResponseEntity<Page<ProductResponseDTO>> listProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction,
+
+            // filtros opcionales
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice
+    ) {
+        Page<ProductResponseDTO> result = service.listProducts(
+                page, size, sortBy, direction, categoryId, name, minPrice, maxPrice
+        );
+
+        return ResponseEntity.ok(result);
+    }
+
+
+    @Operation(summary = "Buscar productos", description = "Obtiene un listado de todos los productos del sistema que cumplen con el término de búsqueda")
     @GetMapping("/search")
     public List<ProductResponseDTO> searchProductsByName(@RequestParam String queryName) {
         return this.service.searchProductByName(queryName);
