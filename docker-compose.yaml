@@ -15,7 +15,6 @@ services:
       DB_PASSWORD: ecommerce_pass
       DDL_MODE: update
       FRONT_END_URL: "http://frontend:3000"
-    # CAMBIO CRUCIAL: Espera a que el servicio 'db' esté sano (healthy)
     depends_on:
       db:
         condition: service_healthy # <--- Nueva condición
@@ -39,9 +38,7 @@ services:
       MYSQL_PASSWORD: ecommerce_pass
     ports:
       - "3306:3306"
-    # CORRECCIÓN CRUCIAL: Usamos el usuario ROOT para el chequeo de salud (es más fiable)
     healthcheck:
-      # CORRECCIÓN: Usamos --password=$MYSQL_ROOT_PASSWORD para mayor robustez
       test: ["CMD-SHELL", "mariadb -u root -prootpass -h 127.0.0.1 -e 'SELECT 1;' $MYSQL_DATABASE"]
       interval: 10s
       timeout: 5s
