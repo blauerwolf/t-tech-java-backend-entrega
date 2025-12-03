@@ -32,12 +32,13 @@ public class CartController {
     }
 
     @PostMapping("/{id}/items")
+    @Operation(summary = "Agregar ítem", description = "Agrega un producto al carrito de compras")
     public CartResponseDTO addItem(@PathVariable Long id, @RequestBody CartItemRequestDTO dto) {
         return service.addItem(id, dto);
     }
 
     @PutMapping("/{id}/items/{itemId}")
-    @Operation(summary = "Agregar ítem", description = "Agrega un producto al carrito de compras")
+    @Operation(summary = "Actualizar ítem", description = "Actualiza un producto del carrito de compras")
     public CartResponseDTO updateItem(
             @PathVariable Long id,
             @PathVariable Long itemId,
