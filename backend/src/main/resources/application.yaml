@@ -15,10 +15,12 @@ spring:
   profiles:
     active: ${PROFILE:dev}
 
+  # Modificado porque uso migraciones de Flyway
   sql:
-    init:
-      data-locations: classpath:/datos.sql
-      mode: always
+    #init:
+      #data-locations: classpath:/datos.sql
+      #mode: always
+      mode: never
 
   jpa:
     defer-datasource-initialization: true

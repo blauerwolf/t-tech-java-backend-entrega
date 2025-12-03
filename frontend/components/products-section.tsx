@@ -138,16 +138,16 @@ export function ProductsSection() {
               <Input
                 type="number"
                 placeholder="Precio"
-                value={formData.price}
-                onChange={(e) => setFormData({ ...formData, price: Number.parseFloat(e.target.value) })}
+                value={formData.price.toString()}
+                onChange={(e) => setFormData({ ...formData, price: Number.parseFloat(e.target.value) || 0 })}
                 disabled={isLoading}
                 step="0.01"
               />
               <Input
                 type="number"
                 placeholder="Stock"
-                value={formData.stock}
-                onChange={(e) => setFormData({ ...formData, stock: Number.parseInt(e.target.value) })}
+                value={formData.stock.toString()}
+                onChange={(e) => setFormData({ ...formData, stock: Number.parseInt(e.target.value) || 0 })}
                 disabled={isLoading}
               />
               <select
