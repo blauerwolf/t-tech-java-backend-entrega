@@ -1,11 +1,11 @@
-INSERT INTO categories (id, name) VALUES
-(1, 'Pantallas'),
-(2, 'Audio'),
-(3, 'Accesorios'),
-(4, 'Computación'),
-(5, 'Tecnología'),
-(6, 'Oficina'),
-(7, 'Almacenamiento');
+INSERT INTO categories (name) VALUES
+('Pantallas'),
+('Audio'),
+('Accesorios'),
+('Computación'),
+('Tecnología'),
+('Oficina'),
+('Almacenamiento');
 
 INSERT INTO products (name, image, price, stock, description, category_id) VALUES
 ('Monitor Samsung 24"', 'https://tccommercear.vtexassets.com/arquivos/ids/161111/159696-800-auto.png', 199.99, 20, 'Monitor LED Full HD', 1),

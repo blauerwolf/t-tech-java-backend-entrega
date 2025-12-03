@@ -7,7 +7,11 @@ import com.techlab.ecommerce.repository.CartRepository;
 import com.techlab.ecommerce.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/carts")
@@ -23,6 +27,12 @@ public class CartController {
     public CartResponseDTO createCart() {
         Cart cart = cartRepo.save(new Cart());
         return service.getCart(cart.getId());
+    }
+
+    @GetMapping("")
+    @Operation(summary = "Listar todos los carritos", description = "Devuelve una lista con todos los carritos del sistema")
+    public List<CartResponseDTO> getAllCarts() {
+        return this.service.getAllCarts();
     }
 
     @GetMapping("/{id}")
@@ -52,5 +62,15 @@ public class CartController {
             @PathVariable Long id,
             @PathVariable Long itemId) {
         return service.deleteItem(id, itemId);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Borrar carrito", description = "Elimina un carrito de compras si está vacío")
+    public ResponseEntity<?> deleteEmptyCart(@PathVariable Long id) {
+        this.service.deleteEmptyCart(id);
+        return ResponseEntity.ok().body(Map.of(
+                "status", "success",
+                "message", "Carrito eliminado correctamente"
+        ));
     }
 }

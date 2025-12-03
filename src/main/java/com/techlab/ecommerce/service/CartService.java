@@ -11,6 +11,7 @@ import com.techlab.ecommerce.repository.CartItemRepository;
 import com.techlab.ecommerce.repository.CartRepository;
 import com.techlab.ecommerce.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,18 @@ public class CartService {
     private final CartRepository cartRepo;
     private final CartItemRepository itemRepo;
     private final ProductRepository productRepo;
+
+    public List<CartResponseDTO> getAllCarts() {
+        List<Cart> carts = this.cartRepo.findAll();
+
+        return carts.stream()
+                .map(cart -> {
+                    CartResponseDTO dto = new CartResponseDTO();
+                    BeanUtils.copyProperties(cart, dto);
+                    return dto;
+                })
+                .toList();
+    }
 
     public CartResponseDTO getCart(Long cartId) {
         Cart cart = cartRepo.findById(cartId)
@@ -68,6 +81,19 @@ public class CartService {
         itemRepo.delete(item);
 
         return getCart(cartId);
+    }
+
+    public void deleteEmptyCart(Long cartId) {
+
+        Cart cart = cartRepo.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Carrito no encontrado"));
+
+        // Validación → ¿está vacío?
+        if (cart.getItems() != null && !cart.getItems().isEmpty()) {
+            throw new RuntimeException("No se puede eliminar un carrito con productos");
+        }
+
+        cartRepo.delete(cart);
     }
 
     // -----------------------------
