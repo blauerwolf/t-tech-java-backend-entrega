@@ -26,8 +26,10 @@ Web frontend para consumir la API
 - CORS
 - next.js (frontend)
 - shadcn (frontend)
-- mariadb
+- mysql
+- flyway
 - docker
+- docker compose
 
 ---
 
@@ -68,8 +70,6 @@ Web frontend para consumir la API
 - `PUT /products/{id}` – Actualizar un producto existente.
 - `DELETE /products/{id}` – Eliminar un producto por ID.
 
-Para más detalles, consultar
-la [documentación completa](https://backend-java-techlab.up.railway.app/docs).
 
 ---
 
