@@ -6,30 +6,25 @@ spring:
   application:
     name: ${APPLICATION_NAME:ecommerce}
 
+  profiles:
+    active: ${PROFILE:dev}
+
+  server:
+    port: ${PORT:8080}
+
   http:
     encoding:
       force: true
       enable: true
       charset: UTF-8
 
-  profiles:
-    active: ${PROFILE:dev}
-
-  # Modificado porque uso migraciones de Flyway
-  sql:
-    #init:
-      #data-locations: classpath:/datos.sql
-      #mode: always
-      mode: never
-
-  jpa:
-    defer-datasource-initialization: true
-
-server:
-  port: ${PORT:8080}
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
 
 frontend:
-  url: ${FRONT_END_URL:http://localhost:5173}
+    url: ${FRONT_END_URL:http://localhost:3000}
 
 springdoc:
   api-docs:
