@@ -59,9 +59,25 @@ Web frontend para consumir la API
 | 🔧 Backend API       | [https://localhost:8080)                                                                                   |
 | 📄 Documentación API | [https://localhost:8080/docs)                                                                              |
 
+### Frontend: Categorías
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-categorias.png)
+
+### Frontend: Productos
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-productos.png)
+
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-producto-edicion.png)
+
+### Frontend: Carritos de compra
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-carrito.png)
+
+### Frontend: Documentación en Swagger
+![Imagen de panel de documentación de API](https://github.com/blauerwolf/blob/main/images/docs-swagger.png)
+
 ---
 
 ## 📋 Endpoints disponibles
+
+![Imagen de panel de documentación de API](https://github.com/blauerwolf/blob/main/images/docs-swagger.png)
 
 - `POST /products` – Crear un nuevo producto.
 - `GET /products` – Listar todos los productos.
