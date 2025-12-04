@@ -27,7 +27,7 @@ public class ProductController {
     }
 
     // @Operations sirve para generar documentación en swagger
-    @Operation(summary = "Crear producto", description = "Agrego un nuevo producto al sistema")
+    @Operation(summary = "Crear producto", description = "Agrega un nuevo producto al sistema")
     @ApiResponse(responseCode = "201", description = "Producto creado")
     @PostMapping("")
     public ResponseEntity<ProductResponseDTO> createProduct(
@@ -69,7 +69,7 @@ public class ProductController {
         return this.service.searchProductById(id);
     }
 
-    @Operation(summary = "Actualizar producto", description = "Actualiza un producto usando las propiedades de la requesto, esto pasa si el ID es válido.")
+    @Operation(summary = "Actualizar producto", description = "Actualiza un producto usando las propiedades, esto pasa si el ID es válido.")
     @PutMapping("/{id}")
     public ProductResponseDTO updateProduct(@PathVariable Long id,
         @RequestBody ProductRequestDTO requestDTO) {

@@ -79,13 +79,26 @@ Web frontend para consumir la API
 
 ![Imagen de panel de documentación de API](https://github.com/blauerwolf/blob/main/images/docs-swagger.png)
 
-- `POST /products` – Crear un nuevo producto.
-- `GET /products` – Listar todos los productos.
-- `GET /products/search?queryName=` – Buscar productos por nombre.
-- `GET /products/{id}` – Obtener un producto por ID.
-- `PUT /products/{id}` – Actualizar un producto existente.
-- `DELETE /products/{id}` – Eliminar un producto por ID.
+**product-controller**
+- `GET /products/{id}` – Obtiene un producto que coincida con el ID.
+- `PUT /products{id}` – Actualiza un producto usando las propiedades, si el ID es válido.
+- `DELETE /products/{id}` – Elimina un producto del sistema. Ésto pasa si el ID es válido.
+- `GET /products` –  Lista todos los productos con filtros opcionales, paginación y ordenamiento.
+- `POST /products – Agrega un nuevo producto al sistema.
+- `GET /products/search – Obtiene un listado de todos los productos del sistema que cumplen con el término de búsqueda.
 
+**cart-controller**
+- `PUT /carts/{id}/items/{itemId} – Actualiza un producto del carrito de compras.
+- `DELETE /carts/{id}/items/{itemId} – Elimina un producto del carrito de compras.
+- `GET /carts – Devuelve una lista con todos los carritos del sistema.
+- `POST /carts – Crea un nuevo carrito de compras vacío con saldo total 0.0.
+- `POST /carts/{id}/items – Agrega un producto al carrito de compras.
+- `GET /carts/{id} – Obtiene el carrito de compras a partir de su ID.
+- `DELETE /carts/{id} –  Elimina un carrito de compras si está vacío.
+
+**category-controller**
+- `GET /categorias – Lista todas las categorías en el sistema.
+- `POST /categorias – Crea una nueva categoría para productos.
 
 ---
 
