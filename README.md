@@ -60,15 +60,15 @@ Web frontend para consumir la API
 | 📄 Documentación API | [https://localhost:8080/docs)                                                                              |
 
 ### Frontend: Categorías
-![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-categorias.png)
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/t-tech-java-backend-entrega/blob/main/images/frontend-categorias.png)
 
 ### Frontend: Productos
-![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-productos.png)
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/t-tech-java-backend-entrega/blob/main/images/frontend-productos.png)
 
-![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-producto-edicion.png)
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/t-tech-java-backend-entrega/blob/main/images/frontend-producto-edicion.png)
 
 ### Frontend: Carritos de compra
-![Imagen de panel de administración del frontend](https://github.com/blauerwolf/blob/main/images/frontend-carrito.png)
+![Imagen de panel de administración del frontend](https://github.com/blauerwolf/t-tech-java-backend-entrega/blob/main/images/frontend-carrito.png)
 
 ### Frontend: Documentación en Swagger
 ![Imagen de panel de documentación de API](https://github.com/blauerwolf/blob/main/images/docs-swagger.png)
