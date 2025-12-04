@@ -71,7 +71,7 @@ Web frontend para consumir la API
 ![Imagen de panel de administración del frontend](https://github.com/blauerwolf/t-tech-java-backend-entrega/blob/main/images/frontend-carrito.png)
 
 ### Frontend: Documentación en Swagger
-![Imagen de panel de documentación de API](https://github.com/blauerwolf/blob/main/images/docs-swagger.png)
+![Imagen de panel de documentación de API](https://github.com/blauerwolf/t-tech-java-backend-entrega/blob/main/images/docs-swagger.png)
 
 ---
 
